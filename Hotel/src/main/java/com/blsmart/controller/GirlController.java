@@ -1,6 +1,8 @@
-package com.blsmart;
+package com.blsmart.controller;
 
-import org.springframework.beans.factory.ListableBeanFactory;
+import com.blsmart.domain.Girl;
+import com.blsmart.respository.GirlRespository;
+import com.blsmart.service.GirlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

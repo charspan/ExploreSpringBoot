@@ -1,5 +1,6 @@
-package com.blsmart;
+package com.blsmart.controller;
 
+import com.blsmart.properties.BoyProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;

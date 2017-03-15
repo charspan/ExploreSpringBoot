@@ -1,4 +1,4 @@
-package com.blsmart;
+package com.blsmart.controller;
 
 /**
  * Created by charspan on 15/03/2017.

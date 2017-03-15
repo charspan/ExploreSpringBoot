@@ -1,5 +1,6 @@
-package com.blsmart;
+package com.blsmart.respository;
 
+import com.blsmart.domain.Girl;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

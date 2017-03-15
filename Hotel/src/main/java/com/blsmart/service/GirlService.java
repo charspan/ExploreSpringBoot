@@ -1,5 +1,7 @@
-package com.blsmart;
+package com.blsmart.service;
 
+import com.blsmart.respository.GirlRespository;
+import com.blsmart.domain.Girl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

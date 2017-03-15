@@ -1,4 +1,4 @@
-package com.blsmart;
+package com.blsmart.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

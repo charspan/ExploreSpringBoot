@@ -1,4 +1,4 @@
-package com.blsmart;
+package com.blsmart.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
