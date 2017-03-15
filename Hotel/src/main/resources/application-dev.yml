@@ -1,0 +1,10 @@
+server:
+  port: 8082
+  #context-path: /Hotel
+cupSize: B
+age: 18
+#配置里注入配置
+content: "cupSize: ${cupSize}, age: ${age}"
+boy:
+  age: 12
+  name: charspan

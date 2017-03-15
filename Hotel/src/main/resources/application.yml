@@ -1,0 +1,13 @@
+spring:
+  profiles:
+    #使用 dev 或者 product 的配置
+    active: product
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1/SpringBoot
+    username: root
+    password: 9k1o2p4dj3H
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
