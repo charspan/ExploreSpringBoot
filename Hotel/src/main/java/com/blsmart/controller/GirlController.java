@@ -1,8 +1,10 @@
 package com.blsmart.controller;
 
 import com.blsmart.domain.Girl;
+import com.blsmart.domain.Result;
 import com.blsmart.respository.GirlRespository;
 import com.blsmart.service.GirlService;
+import com.blsmart.utils.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,7 @@ import java.util.List;
         RequestMethod.PUT, RequestMethod.DELETE}*/)
 public class GirlController {
 
-    private final static Logger logger= LoggerFactory.getLogger(GirlController.class);
+    private final static Logger logger = LoggerFactory.getLogger(GirlController.class);
     /**
      * RESTful API 设计
      * |请求类型|请求路径|功能
@@ -50,15 +52,14 @@ public class GirlController {
 //        return girlRespository.save(girl);
 //    }
 
-        //添加女生
+    //添加女生
     @PostMapping("")
     //@Valid 过滤
-    public Girl girlAdd(@Valid Girl girl, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()){
-            System.out.printf(bindingResult.getFieldError().getDefaultMessage());
-            return null;
+    public Result<Girl> girlAdd(@Valid Girl girl, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResultUtil.error(1, bindingResult.getFieldError().getDefaultMessage());
         }
-        return girlRespository.save(girl);
+        return ResultUtil.success(girlRespository.save(girl));
     }
 
     //通过 id 查找女生
@@ -98,6 +99,11 @@ public class GirlController {
     @PostMapping(value = "/two")
     public void girlTwo() {
         girlService.insertTwo();
+    }
+
+    @GetMapping(value = "getAge/{id}")
+    public void getAge(@PathVariable("id") Integer id) throws Exception {
+        girlService.getAge(id);
     }
 
 }

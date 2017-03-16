@@ -1,6 +1,5 @@
 package com.blsmart.aspect;
 
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
@@ -9,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by charspan on 16/03/2017.
@@ -55,7 +56,7 @@ public class HttpAspect {
 
     @After("log()")
     public void doAfter() {
-        logger.info("2222");
+        logger.info("doAfter");
     }
 
     //returning 就是入参

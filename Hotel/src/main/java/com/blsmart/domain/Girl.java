@@ -15,7 +15,7 @@ public class Girl {
     private Integer id;
     private String name;
     //过滤
-    @Min(value = 18,message = "未成年禁止入内")
+    @Min(value = 18, message = "未成年禁止入内")
     private Integer age;
 
     public Girl() {
@@ -43,5 +43,14 @@ public class Girl {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Girl{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                '}';
     }
 }
