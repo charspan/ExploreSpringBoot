@@ -3,9 +3,13 @@ package com.blsmart.controller;
 import com.blsmart.domain.Girl;
 import com.blsmart.respository.GirlRespository;
 import com.blsmart.service.GirlService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -16,6 +20,8 @@ import java.util.List;
         RequestMethod.GET, RequestMethod.POST,
         RequestMethod.PUT, RequestMethod.DELETE}*/)
 public class GirlController {
+
+    private final static Logger logger= LoggerFactory.getLogger(GirlController.class);
     /**
      * RESTful API 设计
      * |请求类型|请求路径|功能
@@ -31,22 +37,37 @@ public class GirlController {
 
     @GetMapping("")
     public List<Girl> girlList() {
+        logger.info("girlList");
         return girlRespository.findAll();
     }
 
+//    //添加女生
+//    @PostMapping("")
+//    public Girl girlAdd(@RequestParam("name") String name, @RequestParam("age") Integer age) {
+//        Girl girl = new Girl();
+//        girl.setName(name);
+//        girl.setAge(age);
+//        return girlRespository.save(girl);
+//    }
+
+        //添加女生
     @PostMapping("")
-    public Girl girlAdd(@RequestParam("name") String name, @RequestParam("age") Integer age) {
-        Girl girl = new Girl();
-        girl.setName(name);
-        girl.setAge(age);
+    //@Valid 过滤
+    public Girl girlAdd(@Valid Girl girl, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            System.out.printf(bindingResult.getFieldError().getDefaultMessage());
+            return null;
+        }
         return girlRespository.save(girl);
     }
 
+    //通过 id 查找女生
     @GetMapping(value = "/{id}")
     public Girl girlFindOne(@PathVariable("id") Integer id) {
         return girlRespository.findOne(id);
     }
 
+    //更新女生
     @PutMapping(value = "/{id}")
     public Girl girlUpdate(@PathVariable("id") Integer id,
                            @RequestParam("name") String name,
@@ -58,12 +79,13 @@ public class GirlController {
         return girlRespository.save(girl);
     }
 
+    //通过 id 删除女生
     @DeleteMapping(value = "/{id}")
     public void girlDelete(@PathVariable("id") Integer id) {
         girlRespository.delete(id);
     }
 
-    //通过年龄查询
+    //通过年龄查询女生
     @GetMapping(value = "/age/{age}")
     public List<Girl> girlListByAge(@PathVariable("age") Integer age) {
         return girlRespository.findByAge(age);
@@ -72,6 +94,7 @@ public class GirlController {
     @Autowired
     private GirlService girlService;
 
+    //事务处理
     @PostMapping(value = "/two")
     public void girlTwo() {
         girlService.insertTwo();

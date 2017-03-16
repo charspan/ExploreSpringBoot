@@ -3,6 +3,7 @@ package com.blsmart.domain;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
 
 /**
  * Created by charspan on 15/03/2017.
@@ -13,6 +14,8 @@ public class Girl {
     @GeneratedValue
     private Integer id;
     private String name;
+    //过滤
+    @Min(value = 18,message = "未成年禁止入内")
     private Integer age;
 
     public Girl() {

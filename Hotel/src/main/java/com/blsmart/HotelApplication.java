@@ -3,6 +3,16 @@ package com.blsmart;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * idea tips for mac
+ *
+ * 删除一行: command + delete
+ * 剪切一行: command + x
+ * 拷贝一行: command + d
+ * 快速打印: sout + enter
+ * 快速修复: alt + enter
+ * 快速生成 get/set:  command + n 或者 control + enter
+ */
 @SpringBootApplication
 public class HotelApplication {
 
