@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by charspan on 15/03/2017.
  */
@@ -16,6 +18,61 @@ public class GirlService {
 
     @Autowired
     private GirlRespository girlRespository;
+
+    /**
+     * 添加女生
+     *
+     * @param girl
+     * @return
+     */
+    public Girl addGirl(Girl girl) {
+        return girlRespository.save(girl);
+    }
+
+    /**
+     * 通过 id 删除女生
+     *
+     * @param id
+     * @return
+     */
+    public boolean deleteGirl(Integer id) {
+        Girl girl = findById(id);
+        if (girl.getName() != null) {
+            girlRespository.delete(id);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 通过 id 查找女生
+     *
+     * @param id
+     * @return
+     */
+    public Girl findById(Integer id) {
+        return girlRespository.findOne(id);
+    }
+
+    /**
+     * 获取所有女生列表
+     *
+     * @return
+     */
+    public List<Girl> getGirlList() {
+        return girlRespository.findAll();
+    }
+
+    /**
+     * 通过年龄女生列表
+     *
+     * @param age
+     * @return
+     */
+    public List<Girl> getGirlByAge(Integer age) {
+        return girlRespository.findByAge(age);
+    }
 
     // 同时成功或者失败
     @Transactional
@@ -32,7 +89,7 @@ public class GirlService {
 
     public void getAge(Integer id) throws Exception {
         Girl girl = girlRespository.findOne(id);
-        System.out.println("girl"+girl);
+        System.out.println("girl" + girl);
         Integer age = girl.getAge();
         if (age < 10) {
             // 小学
@@ -41,20 +98,11 @@ public class GirlService {
         } else if (age < 16) {
             //初中
             throw new GirlException(ResultEnum.MIDDLE_SCHOOL);
-        }else {
+        } else {
             //大学
             throw new GirlException(ResultEnum.HIGHT_SCHOOL);
         }
         // 其他复杂内容
-    }
-
-    /**
-     * 通过 id 查询
-     * @param id
-     * @return
-     */
-    public Girl findOne(Integer id){
-        return girlRespository.findOne(id);
     }
 
 }

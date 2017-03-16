@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * 快速打印: sout + enter
  * 快速修复: alt + enter
  * 快速生成 get/set:  command + n 或者 control + enter
- *
+ * 快速查找: shift + shift
  * 测试 右键 goto
  */
 @SpringBootApplication

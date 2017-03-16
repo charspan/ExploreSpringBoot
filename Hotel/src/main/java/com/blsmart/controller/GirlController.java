@@ -15,85 +15,71 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
+ * RESTful API 设计
+ * |请求类型|请求路径|功能
+ * |GET|/girls|获取女生列表|
+ * |POST|/girls|添加一个女生|
+ * |GET|/girls/id|通过 id 查询一个女生|
+ * |PUT|/girls/id|通过 id 更新一个女生|
+ * |DELETE|girls/id|通过 id 删除一个女生|
+ * |GET|girls/age/{age}|通过 age 获取女生列表|
+ * |POST|girls/two|模拟测试事物处理|
+ * |GET|girls/getAge/{id}|通过 id 查询女生年龄,模拟实现统一异常处理|
+ *
  * Created by charspan on 15/03/2017.
  */
 @RestController
-@RequestMapping(value = "/girls"/*, method = {
-        RequestMethod.GET, RequestMethod.POST,
-        RequestMethod.PUT, RequestMethod.DELETE}*/)
+@RequestMapping(value = "/girls")
 public class GirlController {
 
     private final static Logger logger = LoggerFactory.getLogger(GirlController.class);
-    /**
-     * RESTful API 设计
-     * |请求类型|请求路径|功能
-     * |GET|/girls|获取女生列表|
-     * |POST|/girls|创建一个女生|
-     * |GET|/girls/id|通过 id 查询一个女生|
-     * |PUT|/girls/id|通过 id 更新一个女生|
-     * |DELETE|girls/id|通过 id 删除一个女生|
-     */
-    //一般情况不能再这里调用 dao
-    @Autowired
-    private GirlRespository girlRespository;
 
+    @Autowired
+    private GirlService girlService;
+
+    //获取女生列表
     @GetMapping("")
-    public List<Girl> girlList() {
-        logger.info("girlList");
-        return girlRespository.findAll();
+    public Result<List<Girl>> getGirlList() {
+        return ResultUtil.success(girlService.getGirlList());
     }
 
-//    //添加女生
-//    @PostMapping("")
-//    public Girl girlAdd(@RequestParam("name") String name, @RequestParam("age") Integer age) {
-//        Girl girl = new Girl();
-//        girl.setName(name);
-//        girl.setAge(age);
-//        return girlRespository.save(girl);
-//    }
-
-    //添加女生
+    //添加女生,用 @Valid 过滤
     @PostMapping("")
-    //@Valid 过滤
     public Result<Girl> girlAdd(@Valid Girl girl, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResultUtil.error(1, bindingResult.getFieldError().getDefaultMessage());
         }
-        return ResultUtil.success(girlRespository.save(girl));
+        return ResultUtil.success(girlService.addGirl(girl));
     }
 
     //通过 id 查找女生
     @GetMapping(value = "/{id}")
     public Girl girlFindOne(@PathVariable("id") Integer id) {
-        return girlRespository.findOne(id);
+        return girlService.findById(id);
     }
 
-    //更新女生
+    //更新女生 Content-Type = application/x-www-form-urlencoded 且 age >= 18
     @PutMapping(value = "/{id}")
-    public Girl girlUpdate(@PathVariable("id") Integer id,
-                           @RequestParam("name") String name,
-                           @RequestParam("age") Integer age) {
-        Girl girl = new Girl();
+    public Result<Girl> girlUpdate(@PathVariable("id") Integer id, @Valid Girl girl, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResultUtil.error(1, bindingResult.getFieldError().getDefaultMessage());
+        }
         girl.setId(id);
-        girl.setName(name);
-        girl.setAge(age);
-        return girlRespository.save(girl);
+        return ResultUtil.success(girlService.addGirl(girl));
     }
 
     //通过 id 删除女生
     @DeleteMapping(value = "/{id}")
     public void girlDelete(@PathVariable("id") Integer id) {
-        girlRespository.delete(id);
+        girlService.deleteGirl(id);
     }
 
     //通过年龄查询女生
     @GetMapping(value = "/age/{age}")
     public List<Girl> girlListByAge(@PathVariable("age") Integer age) {
-        return girlRespository.findByAge(age);
+        return girlService.getGirlByAge(age);
     }
 
-    @Autowired
-    private GirlService girlService;
 
     //事务处理
     @PostMapping(value = "/two")
@@ -101,6 +87,7 @@ public class GirlController {
         girlService.insertTwo();
     }
 
+    //通过 id 查询女生年龄
     @GetMapping(value = "getAge/{id}")
     public void getAge(@PathVariable("id") Integer id) throws Exception {
         girlService.getAge(id);

@@ -22,23 +22,23 @@ import static org.junit.Assert.*;
 public class GirlControllerTest {
 
 
-//测试代码,未测试 url
-//    @Autowired
-//    private GirlController girlController;
-//
-//    @Test
-//    public void girlList() throws Exception {
-//        girlController.girlList();
-//    }
+    //测试代码,未测试 url
+    @Autowired
+    private GirlController girlController;
 
+    @Test
+    public void girlList1() throws Exception {
+        girlController.getGirlList();
+    }
+
+    //http://www.cnblogs.com/0201zcr/p/5756642.html
     @Autowired
     private MockMvc mockMvc;
 
     @Test
     public void girlList() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/girls"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().string("abc"));
+                .andExpect(MockMvcResultMatchers.status().isOk());
         // .andExpect(MockMvcResultMatchers.content().string("abc")) 希望返回值是 abc
     }
 }

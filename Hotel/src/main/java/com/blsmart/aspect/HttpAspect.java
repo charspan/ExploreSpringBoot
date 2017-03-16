@@ -18,9 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class HttpAspect {
 
-    //.. 代表不管是什么参数都会被拦截
-    //public * com.blsmart.controller.GirlController.girlList(..)) 指定girlList方法
-    // * 所有方法
+//    //.. 代表不管是什么参数都会被拦截
+//    //public * com.blsmart.controller.GirlController.girlList(..)) 指定girlList方法
+//    // * 所有方法
 //    @Before("execution(public * com.blsmart.controller.GirlController.*(..))")
 //    public void log(){
 //        System.out.println(11111);
@@ -34,11 +34,11 @@ public class HttpAspect {
     private final static Logger logger = LoggerFactory.getLogger(HttpAspect.class);
 
     @Pointcut("execution(public * com.blsmart.controller.GirlController.*(..))")
-    public void log() {
+    public void filter() {
 
     }
 
-    @Before("log()")
+    @Before("filter()")
     public void doBefore(JoinPoint joinPoint) {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpServletRequest request = (HttpServletRequest) attributes.getRequest();
@@ -54,13 +54,13 @@ public class HttpAspect {
         logger.info("args={}", joinPoint.getArgs());
     }
 
-    @After("log()")
+    @After("filter()")
     public void doAfter() {
         logger.info("doAfter");
     }
 
     //returning 就是入参
-    @AfterReturning(returning = "object", pointcut = "log()")
+    @AfterReturning(returning = "object", pointcut = "filter()")
     public void doAfterReturning(Object object) {
         logger.info("response={}", object);
 
